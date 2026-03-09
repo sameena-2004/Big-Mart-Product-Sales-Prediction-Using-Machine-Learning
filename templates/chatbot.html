@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>RetailAI Assistant</title>
+
+<style>
+
+body{
+margin:0;
+font-family:'Segoe UI',Arial;
+background:linear-gradient(135deg,#667eea,#764ba2);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+/* Chat container */
+
+.chat-container{
+width:480px;
+height:650px;
+background:rgba(255,255,255,0.95);
+border-radius:18px;
+box-shadow:0px 20px 45px rgba(0,0,0,0.3);
+display:flex;
+flex-direction:column;
+overflow:hidden;
+}
+
+/* Header */
+
+.chat-header{
+background:linear-gradient(90deg,#ff7a18,#ffb347);
+color:white;
+padding:18px;
+font-size:20px;
+font-weight:600;
+display:flex;
+align-items:center;
+justify-content:center;
+letter-spacing:1px;
+}
+
+/* Chat area */
+
+.chatbox{
+flex:1;
+padding:18px;
+overflow-y:auto;
+background:#f8f9fc;
+}
+
+/* Message layout */
+
+.message-row{
+display:flex;
+margin-bottom:14px;
+align-items:flex-end;
+}
+
+/* Avatar */
+
+.avatar{
+width:36px;
+height:36px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+font-weight:bold;
+margin-right:8px;
+font-size:14px;
+}
+
+.bot-avatar{
+background:#27ae60;
+}
+
+.user-avatar{
+background:#2874f0;
+margin-left:8px;
+}
+
+/* Messages */
+
+.message{
+padding:12px 16px;
+border-radius:14px;
+font-size:14px;
+max-width:70%;
+line-height:1.4;
+}
+
+.bot{
+background:white;
+box-shadow:0px 3px 10px rgba(0,0,0,0.1);
+}
+
+.user{
+background:#2874f0;
+color:white;
+margin-left:auto;
+}
+
+/* Timestamp */
+
+.timestamp{
+font-size:10px;
+color:#777;
+margin-top:3px;
+}
+
+/* Input */
+
+.input-area{
+display:flex;
+border-top:1px solid #eee;
+background:white;
+}
+
+input{
+flex:1;
+padding:14px;
+border:none;
+outline:none;
+font-size:14px;
+}
+
+/* Send button */
+
+button{
+width:100px;
+background:linear-gradient(90deg,#00c6ff,#0072ff);
+color:white;
+border:none;
+font-weight:600;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+/* Back button */
+
+.back-btn{
+text-align:center;
+padding:12px;
+background:#ff7a18;
+color:white;
+text-decoration:none;
+font-weight:600;
+transition:0.3s;
+}
+
+.back-btn:hover{
+background:#ff5500;
+}
+
+/* Typing animation */
+
+.typing span{
+display:inline-block;
+width:6px;
+height:6px;
+margin:2px;
+background:#555;
+border-radius:50%;
+animation:blink 1.4s infinite both;
+}
+
+.typing span:nth-child(2){animation-delay:.2s;}
+.typing span:nth-child(3){animation-delay:.4s;}
+
+@keyframes blink{
+0%{opacity:.2}
+20%{opacity:1}
+100%{opacity:.2}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="chat-container">
+
+<div class="chat-header">
+🤖 RetailAI Smart Assistant
+</div>
+
+<div id="chatbox" class="chatbox"></div>
+
+<div class="input-area">
+
+<input id="message" placeholder="Ask about sales, inventory, demand...">
+
+<button onclick="send()">Send</button>
+
+</div>
+
+<a href="/dashboard" class="back-btn">⬅ Back to Dashboard</a>
+
+</div>
+
+<script>
+
+function getTime(){
+let now=new Date();
+return now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+}
+
+function send(){
+
+let msg=document.getElementById("message").value;
+
+if(msg.trim()=="") return;
+
+let chat=document.getElementById("chatbox");
+
+chat.innerHTML+=`
+<div class="message-row">
+<div class="message user">
+${msg}
+<div class="timestamp">${getTime()}</div>
+</div>
+<div class="avatar user-avatar">U</div>
+</div>
+`;
+
+document.getElementById("message").value="";
+
+chat.innerHTML+=`
+<div id="typing" class="message-row">
+<div class="avatar bot-avatar">AI</div>
+<div class="message bot">
+RetailAI is analyzing
+<span class="typing">
+<span></span><span></span><span></span>
+</span>
+</div>
+</div>
+`;
+
+chat.scrollTop=chat.scrollHeight;
+
+fetch("/chat",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({message:msg})
+})
+.then(res=>res.json())
+.then(data=>{
+
+document.getElementById("typing").remove();
+
+chat.innerHTML+=`
+<div class="message-row">
+<div class="avatar bot-avatar">AI</div>
+<div class="message bot">
+${data.reply}
+<div class="timestamp">${getTime()}</div>
+</div>
+</div>
+`;
+
+chat.scrollTop=chat.scrollHeight;
+
+});
+
+}
+
+document.getElementById("message").addEventListener("keypress",function(e){
+if(e.key==="Enter"){
+send();
+}
+});
+
+</script>
+
+</body>
+
+</html>

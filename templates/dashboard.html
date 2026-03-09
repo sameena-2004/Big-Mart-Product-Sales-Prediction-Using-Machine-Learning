@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Retail Analytics Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: #f1f5fb;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 230px;
+            height: 100vh;
+            background: linear-gradient(180deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            position: fixed;
+            padding-top: 25px;
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 35px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* NAV BUTTONS */
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 14px 18px;
+            margin: 6px 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: #ffffff20;
+            transform: translateX(6px);
+        }
+
+        /* MAIN AREA */
+        .main {
+            margin-left: 230px;
+            padding: 35px;
+        }
+
+        /* DASHBOARD TITLE */
+        h1 {
+            color: #333;
+            font-weight: 600;
+        }
+
+        /* CARDS */
+        .cards {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        /* CARD STYLE */
+        .card {
+            flex: 1;
+            min-width: 200px;
+            padding: 22px;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+        }
+
+        /* DIFFERENT COLORS */
+        .card:nth-child(1) {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+        }
+
+        .card:nth-child(2) {
+            background: linear-gradient(45deg, #ff9966, #ff5e62);
+        }
+
+        .card:nth-child(3) {
+            background: linear-gradient(45deg, #36d1dc, #5b86e5);
+        }
+
+        .card:nth-child(4) {
+            background: linear-gradient(45deg, #11998e, #38ef7d);
+        }
+
+        .card h3 {
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .card p {
+            font-size: 30px;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        /* SECTIONS */
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+        }
+
+        .section h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table th {
+            background: #2c5364;
+            color: white;
+            padding: 12px;
+            font-weight: 500;
+        }
+
+        table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        table tr:hover {
+            background: #f7f9fc;
+        }
+
+        /* LIST */
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        /* RESPONSIVE */
+        @media(max-width: 900px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .cards {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Retail AI</h2>
+        <a href="/dashboard">📊 Dashboard</a>
+        <a href="/products">📦 Product Catalog</a>
+        <a href="/prediction">🧠 Sales Prediction</a>
+        <a href="/analytics">📈 Analytics</a>
+        <a href="/forecast">🔮 Demand Forecast</a>
+        <a href="/chatbot">🤖 AI Assistant</a>
+        <a href="/logout">🚪 Logout</a>
+    </div>
+
+    <div class="main">
+        <h1>{{session['shop']}} Dashboard</h1>
+
+        <div class="cards">
+            <div class="card">
+                <h3>Top Categories</h3>
+                <p>{{top_products|length}}</p>
+            </div>
+            <div class="card">
+                <h3>Low Demand</h3>
+                <p>{{low_products|length}}</p>
+            </div>
+            <div class="card">
+                <h3>Products</h3>
+                <p>{{total_products}}</p>
+            </div>
+            <div class="card">
+                <h3>Low Stock</h3>
+                <p>{{low_stock_products|length}}</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Top Selling Categories</h2>
+            <ul>
+                {% for item in top_products %}
+                <li>{{item}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>Low Demand Categories</h2>
+            <ul>
+                {% for item in low_products %}
+                <li>{{item}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>⚠ Low Stock Alerts</h2>
+            {% if low_stock_products %}
+            <table>
+                <tr>
+                    <th>Product</th>
+                    <th>Stock</th>
+                    <th>Recommendation</th>
+                </tr>
+                {% for p in low_stock_products %}
+                <tr>
+                    <td>{{p.name}}</td>
+                    <td>{{p.stock}}</td>
+                    <td>Restock {{ recommend_restock(p.stock) }} units</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+            <p>No low stock products.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

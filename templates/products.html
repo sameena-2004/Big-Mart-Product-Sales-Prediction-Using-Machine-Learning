@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Product Catalog</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #eef2f7;
+            margin: 0;
+            text-align: center;
+        }
+
+        /* TITLE */
+        h1 {
+            margin-top: 30px;
+            color: #333;
+        }
+
+        /* ADD BUTTON */
+        .add-btn {
+            background: #2874f0;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: 0.3s;
+        }
+
+        .add-btn:hover {
+            background: #0f5ad6;
+            transform: translateY(-2px);
+        }
+
+        /* TABLE */
+        table {
+            margin: auto;
+            border-collapse: collapse;
+            width: 85%;
+            background: white;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #2c3e50;
+            color: white;
+            padding: 14px;
+            font-weight: 500;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:nth-child(even) {
+            background: #f7f9fc;
+        }
+
+        tr:hover {
+            background: #eef3ff;
+        }
+
+        /* BUTTONS */
+        button {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            margin: 4px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        /* EDIT */
+        .edit {
+            background: #f39c12;
+        }
+
+        .edit:hover {
+            background: #d68910;
+        }
+
+        /* DELETE */
+        .delete {
+            background: #e74c3c;
+        }
+
+        .delete:hover {
+            background: #c0392b;
+        }
+
+        /* BACK */
+        .back {
+            background: #7f8c8d;
+            margin-top: 20px;
+            padding: 10px 16px;
+        }
+
+        .back:hover {
+            background: #636e72;
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:900px) {
+            table {
+                width: 95%;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Product Catalog</h1>
+
+    <a href="/add_product">
+        <button class="add-btn">+ Add Product</button>
+    </a>
+
+    <table>
+
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Actions</th>
+        </tr>
+
+        {% if products %}
+
+        {% for product in products %}
+
+        <tr>
+            <td>{{product.id}}</td>
+            <td>{{product.name}}</td>
+            <td>{{product.category}}</td>
+            <td>₹{{product.price}}</td>
+            <td>{{product.stock}}</td>
+
+            <td>
+                <a href="/edit_product/{{product.id}}">
+                    <button class="edit">Edit</button>
+                </a>
+
+                <a href="/delete_product/{{product.id}}">
+                    <button class="delete">Delete</button>
+                </a>
+            </td>
+        </tr>
+
+        {% endfor %}
+
+        {% else %}
+
+        <tr>
+            <td colspan="6">No products available</td>
+        </tr>
+
+        {% endif %}
+
+    </table>
+
+    <br>
+
+    <a href="/dashboard">
+        <button class="back">Back to Dashboard</button>
+    </a>
+
+</body>
+
+</html>

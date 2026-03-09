@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Add Product</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+font-family:'Poppins',sans-serif;
+background:linear-gradient(120deg,#1d2671,#c33764);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+margin:0;
+}
+
+/* Form container */
+
+.container{
+background:white;
+padding:35px;
+border-radius:12px;
+width:380px;
+box-shadow:0 10px 30px rgba(0,0,0,0.25);
+text-align:center;
+}
+
+/* Title */
+
+h1{
+margin-bottom:20px;
+color:#333;
+}
+
+/* Labels */
+
+label{
+display:block;
+text-align:left;
+margin-top:10px;
+font-weight:500;
+color:#444;
+}
+
+/* Inputs */
+
+input{
+width:100%;
+padding:10px;
+margin-top:6px;
+border:1px solid #ccc;
+border-radius:6px;
+font-size:14px;
+transition:0.2s;
+}
+
+input:focus{
+border-color:#2874f0;
+outline:none;
+box-shadow:0 0 5px rgba(40,116,240,0.4);
+}
+
+/* Button */
+
+button{
+width:100%;
+margin-top:20px;
+padding:12px;
+border:none;
+border-radius:6px;
+background:linear-gradient(45deg,#36d1dc,#5b86e5);
+color:white;
+font-size:16px;
+font-weight:500;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+transform:translateY(-2px);
+box-shadow:0 6px 15px rgba(0,0,0,0.2);
+}
+
+/* Back link */
+
+.back{
+display:inline-block;
+margin-top:20px;
+text-decoration:none;
+color:white;
+background:#2c3e50;
+padding:8px 16px;
+border-radius:6px;
+font-size:14px;
+}
+
+.back:hover{
+background:#34495e;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Add Product</h1>
+
+<form method="POST">
+
+<label>Product Name</label>
+<input type="text" name="name" required>
+
+<label>Category</label>
+<input type="text" name="category" required>
+
+<label>Price</label>
+<input type="number" name="price" required>
+
+<button type="submit">Add Product</button>
+
+</form>
+
+<a class="back" href="/products">Back to Products</a>
+
+</div>
+
+</body>
+
+</html>

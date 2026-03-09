@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Retail AI Platform - Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(120deg, #1d2671, #c33764);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        /* Login container */
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            width: 350px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            text-align: center;
+            animation: fadeIn 0.8s ease;
+        }
+
+        /* Title */
+        h2 {
+            margin-bottom: 8px;
+            color: #1d2671;
+            font-weight: 700;
+        }
+
+        /* Subtitle */
+        .subtitle {
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        /* Inputs */
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        input:focus {
+            border-color: #2874f0;
+            outline: none;
+            box-shadow: 0 0 5px rgba(40, 116, 240, 0.3);
+        }
+
+        /* Button */
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2874f0;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #0f5ad6;
+            transform: translateY(-1px);
+        }
+
+        /* Register link */
+        .register-link {
+            display: block;
+            margin-top: 15px;
+            color: #2874f0;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .register-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer text */
+        .footer-text {
+            margin-top: 15px;
+            font-size: 13px;
+            color: gray;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media(max-width:420px) {
+            .login-box {
+                width: 90%;
+                padding: 30px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-box">
+        <h2>Big Mart & Retail AI Platform</h2>
+
+        <p class="subtitle">
+            AI Powered Sales Prediction & Inventory Intelligence
+        </p>
+
+        <form method="POST">
+            <input type="text" name="username" placeholder="Enter Username" required>
+
+            <input type="password" name="password" placeholder="Enter Password" required>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <p class="footer-text">
+            Demo Login: <b>admin / 123</b>
+        </p>
+
+        <a class="register-link" href="/register">
+            Register New Retail Shop
+        </a>
+    </div>
+
+</body>
+</html>
